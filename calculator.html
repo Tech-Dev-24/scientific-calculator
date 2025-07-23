@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Scientific Calculator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap 5 CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .calculator {
+      max-width: 400px;
+      margin: 50px auto;
+      padding: 20px;
+      background: #60e7ff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .form-control {
+      font-size: 1.5rem;
+      text-align: right;
+    }
+    .btn {
+      width: 100%;
+      font-size: 1.2rem;
+      margin: 3px 0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="calculator border">
+  <h3 class="text-center mb-3">Scientific Calculator</h3>
+  <input type="text" id="display" class="form-control mb-3" readonly>
+
+  <div class="row g-2">
+    <div class="col-3"><button class="btn btn-secondary" onclick="appendValue('7')">7</button></div>
+    <div class="col-3"><button class="btn btn-secondary" onclick="appendValue('8')">8</button></div>
+    <div class="col-3"><button class="btn btn-secondary" onclick="appendValue('9')">9</button></div>
+    <div class="col-3"><button class="btn btn-danger" onclick="clearDisplay()">C</button></div>
+
+    <div class="col-3"><button class="btn btn-secondary" onclick="appendValue('4')">4</button></div>
+    <div class="col-3"><button class="btn btn-secondary" onclick="appendValue('5')">5</button></div>
+    <div class="col-3"><button class="btn btn-secondary" onclick="appendValue('6')">6</button></div>
+    <div class="col-3"><button class="btn btn-primary" onclick="appendValue('*')">×</button></div>
+
+    <div class="col-3"><button class="btn btn-secondary" onclick="appendValue('1')">1</button></div>
+    <div class="col-3"><button class="btn btn-secondary" onclick="appendValue('2')">2</button></div>
+    <div class="col-3"><button class="btn btn-secondary" onclick="appendValue('3')">3</button></div>
+    <div class="col-3"><button class="btn btn-primary" onclick="appendValue('-')">−</button></div>
+
+    <div class="col-3"><button class="btn btn-secondary" onclick="appendValue('0')">0</button></div>
+    <div class="col-3"><button class="btn btn-secondary" onclick="appendValue('.')">.</button></div>
+    <div class="col-3"><button class="btn btn-primary" onclick="appendValue('+')">+</button></div>
+    
+    <div class="col-3"><button class="btn btn-warning" onclick="appendValue('/')">÷</button></div>
+    <div class="col-3"><button class="btn btn-warning" onclick="appendValue('**')">^</button></div>
+    <div class="col-3"><button class="btn btn-info" onclick="calculateFunction('sin')">sin</button></div>
+    <div class="col-3"><button class="btn btn-info" onclick="calculateFunction('cos')">cos</button></div>
+    
+    <div class="col-3"><button class="btn btn-info" onclick="calculateFunction('tan')">tan</button></div>
+    <div class="col-3"><button class="btn btn-info" onclick="calculateFunction('sqrt')">√</button></div>
+    <div class="col-3"><button class="btn btn-info" onclick="calculateFunction('log')">log</button></div>
+    <div class="col-3"><button class="btn btn-dark" onclick="insertPi()">π</button></div>
+    <div class="col-3"><button class="btn btn-dark" onclick="backspace()">←</button></div>
+    
+    <div class="col-12"><button class="btn btn-success" onclick="calculate()">=</button></div>
+</div>
+</div>
+
+<script>
+  const display = document.getElementById('display');
+
+  function appendValue(value) {
+    display.value += value;
+  }
+
+  function clearDisplay() {
+    display.value = '';
+  }
+
+  function backspace() {
+    display.value = display.value.slice(0, -1);
+  }
+
+  function calculate() {
+    try {
+      display.value = eval(display.value);
+    } catch {
+      display.value = 'Error';
+    }
+  }
+
+  function calculateFunction(func) {
+    try {
+      const val = parseFloat(display.value);
+      let result;
+      switch(func) {
+        case 'sin': result = Math.sin(val * Math.PI / 180); break;
+        case 'cos': result = Math.cos(val * Math.PI / 180); break;
+        case 'tan': result = Math.tan(val * Math.PI / 180); break;
+        case 'sqrt': result = Math.sqrt(val); break;
+        case 'log': result = Math.log10(val); break;
+      }
+      display.value = result;
+    } catch {
+      display.value = 'Error';
+    }
+  }
+
+  function insertPi() {
+    display.value += Math.PI.toFixed(16);
+  }
+</script>
+
+</body>
+</html>
